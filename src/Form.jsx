@@ -33,7 +33,7 @@ function Form({ textInput, setTextInput, setNotes }) {
     <div>
       <select name="category" value={textInput.category} onChange={handleChange}>
         <option value="" disabled>
-          Catagory
+          Category
         </option>
         <option value="personal">Personal</option>
         <option value="work">Work</option>

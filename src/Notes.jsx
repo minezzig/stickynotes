@@ -2,22 +2,14 @@ import Note from "./Note";
 import { useState } from "react";
 
 function Notes({ notes, setNotes }) {
-  const [filteredNotes, setFilteredNotes] = useState(null);
+  const [category, setCategory] = useState("all");
 
   const handleFilter = (e) => {
-    const category = e.target.value;
-    if (category === "all") setFilteredNotes(null);
-    else {
-      const filtered = notes.filter(
-        (note) => note.category === e.target.value
-      );
-      setFilteredNotes(filtered);
-    }
+    setCategory(e.target.value);
   };
 
   return (
     <>
-
       <div className="sort-container">
         <label htmlFor="sort">Sort by:</label>
         <select onChange={handleFilter} name="sort">
@@ -28,10 +20,7 @@ function Notes({ notes, setNotes }) {
         </select>
       </div>
       <div className="notes-container">
-        <Note
-          notes={filteredNotes || notes}
-          setNotes={setNotes}
-        />
+        <Note notes={notes} setNotes={setNotes} category={category} />
       </div>
     </>
   );
