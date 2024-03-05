@@ -3,6 +3,8 @@ import { useState } from "react";
 
 function Form({ textInput, setTextInput, setNotes }) {
   const [error, setError] = useState(false);
+  
+  // allow for input data
   const handleChange = (e) => {
     setTextInput({
       ...textInput,
@@ -10,6 +12,7 @@ function Form({ textInput, setTextInput, setNotes }) {
     });
   };
 
+  // save note entry in state or set Error
   const handleSave = () => {
     if (!textInput.category || !textInput.text) {
       setError(true);
@@ -25,6 +28,7 @@ function Form({ textInput, setTextInput, setNotes }) {
     setError(false);
   };
 
+  // clear form
   const handleReset = () => {
     setTextInput({ category: "", text: "", completed: false, isEditing: false });
   };

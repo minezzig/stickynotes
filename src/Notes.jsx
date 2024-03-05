@@ -4,6 +4,7 @@ import { useState } from "react";
 function Notes({ notes, setNotes }) {
   const [category, setCategory] = useState("all");
 
+  // set state to the category user wants to view
   const handleFilter = (e) => {
     setCategory(e.target.value);
   };

@@ -9,11 +9,13 @@ import {
 function Note({ notes, setNotes, category }) {
   const [editItem, setEditItem] = useState({});
 
+  // delete a note
   const handleDelete = (id) => {
     const filtered = notes.filter((note) => note.id !== id);
     setNotes(filtered);
   };
 
+  // allow the note input to be edited
   const handleEdit = (e) => {
     setEditItem((prevEditItem) => ({
       ...prevEditItem,
@@ -21,6 +23,7 @@ function Note({ notes, setNotes, category }) {
     }));
   };
 
+  // save the new edited note and replace the original
   const handleSaveEdit = () => {
     const newNotesList = notes.map((note) =>
       note.id === editItem.id ? editItem : note
@@ -29,6 +32,7 @@ function Note({ notes, setNotes, category }) {
     setEditItem({});
   };
 
+  // if the note is completed, change completed status and move it to the end of the array
   const toggleComplete = (id) => {
     const found = notes.find((note) => note.id === id);
     found.completed = !found.completed;
@@ -40,7 +44,8 @@ function Note({ notes, setNotes, category }) {
     setNotes(newOrder);
   };
 
-  // different components to render
+  // *** RENDER DIFFERENT NOTE DEPENDING ON THE TYPE REQUIRED
+  // return a regular note
   const renderNote = (note) => {
     return (
       <div key={note.id} className={`note ${note.category}`}>
@@ -90,6 +95,7 @@ function Note({ notes, setNotes, category }) {
     );
   };
 
+  // return a note that is in edit mode
   const renderEditNote = (note) => {
     return (
       <div key={note.id} className={`note ${note.category}`}>
