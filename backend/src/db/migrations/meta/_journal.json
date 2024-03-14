@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1710341385609,
+      "tag": "0000_past_patch",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1710407293896,
+      "tag": "0001_unknown_mister_sinister",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1710410163348,
+      "tag": "0002_green_amazoness",
+      "breakpoints": true
+    }
+  ]
+}

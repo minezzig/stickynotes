@@ -1,12 +1,11 @@
-const {
-  integer,
+import {
+  uniqueIndex,
   pgTable,
   serial,
-  uniqueIndex,
   varchar,
-} = require("drizzle-orm/pg-core");
+} from "drizzle-orm/pg-core";
 
-const notes = pgTable(
+export const notes = pgTable(
   "notes",
   {
     id: serial("id").primaryKey(),
@@ -20,4 +19,5 @@ const notes = pgTable(
   }
 );
 
-module.exports = { notes: notes };
+
+// module.exports = notes;
