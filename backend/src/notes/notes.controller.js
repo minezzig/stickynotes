@@ -17,7 +17,7 @@ async function noteExists(req, res, next) {
 
 async function hasValidProperties(req, res, next) {
   // valid properties
-  const validProperties = ["category", "note"];
+  const validProperties = ["category", "text"];
   // check if empty
   const { data = {} } = req.body;
   if (!req.body.data) {
@@ -26,7 +26,7 @@ async function hasValidProperties(req, res, next) {
 
   // chcek if contains all required parts;
   validProperties.forEach((property) => {
-    if (!data[property]) next({ status: 400, message: `missing property` });
+    if (!data[property]) next({ status: 400, message: `missing property: ${property}` });
   });
 
   next();

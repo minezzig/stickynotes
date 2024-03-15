@@ -5,7 +5,7 @@ import { notes } from "../db/schema.js";
 import { eq } from "drizzle-orm";
 
 async function list() {
-  return await db.select().from(notes);
+  return await db.select().from(notes).orderBy(notes.id);
 }
 
 async function read(id) {
@@ -16,7 +16,7 @@ async function create(newNote) {
     .insert(notes)
     .values({
       category: newNote.category,
-      note: newNote.note,
+      text: newNote.text,
     })
     .returning();
 }
@@ -44,7 +44,7 @@ async function updateStatusIsEditing(id, isEditing) {
 async function update(id, editedNote) {
   return db
     .update(notes)
-    .set({ category: editedNote.category, note: editedNote.note })
+    .set({ category: editedNote.category, text: editedNote.text })
     .where(eq(notes.id, id))
     .returning();
 }
