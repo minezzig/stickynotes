@@ -22,6 +22,20 @@
       "when": 1710410163348,
       "tag": "0002_green_amazoness",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1710425839885,
+      "tag": "0003_brave_omega_flight",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1710427898245,
+      "tag": "0004_swift_silk_fever",
+      "breakpoints": true
     }
   ]
 }

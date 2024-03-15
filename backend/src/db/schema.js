@@ -1,23 +1,16 @@
 import {
-  uniqueIndex,
+  boolean,
+  timestamp,
   pgTable,
   serial,
   varchar,
 } from "drizzle-orm/pg-core";
 
-export const notes = pgTable(
-  "notes",
-  {
-    id: serial("id").primaryKey(),
-    note: varchar("note", { length: 256 }),
-    category: varchar("category", { length: 256 }),
-  },
-  (notes) => {
-    return {
-      nameIndex: uniqueIndex("name_idx").on(notes.note),
-    };
-  }
-);
-
-
-// module.exports = notes;
+export const notes = pgTable("notes", {
+  id: serial("id").primaryKey(),
+  category: varchar("category", { length: 256 }),
+  note: varchar("note", { length: 256 }),
+  completed: boolean("completed").default(false),
+  isEditing: boolean("is_editing").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
