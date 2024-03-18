@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
+import { createNote } from "./utils/api";
 
-function Form({ textInput, setTextInput, setNotes }) {
+function Form({ textInput, setTextInput, loadNotes}) {
   const [error, setError] = useState(false);
   
   // allow for input data
@@ -13,18 +14,14 @@ function Form({ textInput, setTextInput, setNotes }) {
   };
 
   // save note entry in state or set Error
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!textInput.category || !textInput.text) {
       setError(true);
       return;
     }
-    const newNote = {
-      id: uuidv4(),
-      timestamp: new Date(),
-      ...textInput,
-    };
-    setNotes((prevNotes) => [newNote, ...prevNotes]);
-    setTextInput({ category: "", text: "", completed: false, isEditing: false });
+    await createNote(textInput) // call API to set note
+    loadNotes();
+    setTextInput({ category: "", text: ""});
     setError(false);
   };
 
@@ -54,6 +51,7 @@ function Form({ textInput, setTextInput, setNotes }) {
         name="text"
         value={textInput.text}
         onChange={handleChange}
+        onKeyDown={(e) => e.key === "Enter" && handleSave()}
         placeholder="write your sticky note..."
       />
       <div className="buttons-container">

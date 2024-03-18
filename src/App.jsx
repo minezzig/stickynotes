@@ -1,24 +1,40 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import Form from "./Form";
-import Comments from "./Notes";
-import data from "./data";
+import Notes from "./Notes";
+import { listNotes, deleteNote } from "./utils/api";
+
 function App() {
-  const [textInput, setTextInput] = useState({category: "", text: "", completed: false, isEditing: false});
-  const [notes, setNotes] = useState(data);
+  const [textInput, setTextInput] = useState({
+    category: "",
+    text: "",
+    completed: false,
+    isEditing: false,
+  });
+  const [notes, setNotes] = useState(null);
+
+  const loadNotes = () => {
+    console.log("loadNotes api call");
+    listNotes().then(({ data }) => setNotes(data.reverse()));
+    console.log(notes)
+  };
+
+  // immediately fetch notes
+  useEffect(loadNotes, []);
+
+
 
   return (
     <div className="card">
       <h1 className="title">stickyNotes</h1>
       <Form
-      textInput={textInput}
+        textInput={textInput}
         setTextInput={setTextInput}
-        setNotes={setNotes}
+        loadNotes={loadNotes}
       />
-      <Comments
-        notes={notes}
-        setNotes={setNotes}
-      />
+      {notes && (
+        <Notes notes={notes} setNotes={setNotes} loadNotes={loadNotes} />
+      )}
     </div>
   );
 }

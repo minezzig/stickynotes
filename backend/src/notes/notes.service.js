@@ -4,13 +4,16 @@ import { db } from "../server.js";
 import { notes } from "../db/schema.js";
 import { eq } from "drizzle-orm";
 
+// get all notes from database in id order
 async function list() {
   return await db.select().from(notes).orderBy(notes.id);
 }
 
+// get one note depending on id
 async function read(id) {
   return await db.select().from(notes).where(eq(notes.id, id));
 }
+// create a new note
 async function create(newNote) {
   return await db
     .insert(notes)
@@ -21,10 +24,12 @@ async function create(newNote) {
     .returning();
 }
 
+// delete a note
 async function destroy(id) {
   await db.delete(notes).where(eq(notes.id, id)).returning();
 }
 
+//update the completed status
 async function updateStatusCompleted(id, completed) {
   return db
     .update(notes)
@@ -33,6 +38,7 @@ async function updateStatusCompleted(id, completed) {
     .returning();
 }
 
+// update the isEditing status
 async function updateStatusIsEditing(id, isEditing) {
   return db
     .update(notes)
@@ -41,6 +47,7 @@ async function updateStatusIsEditing(id, isEditing) {
     .returning();
 }
 
+// update the body/category of the note
 async function update(id, editedNote) {
   return db
     .update(notes)
@@ -49,9 +56,6 @@ async function update(id, editedNote) {
     .returning();
 }
 
-// module.exports = {
-//   list,
-// };
 export {
   list,
   read,

@@ -21,5 +21,4 @@ router
   .delete(notesController.deleteMiddleware)
   .all(methodNotAllowed);
 
-//module.exports = router;
 export default router;

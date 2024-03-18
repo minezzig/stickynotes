@@ -5,14 +5,17 @@ import {
   faCheck,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { deleteNote } from "./utils/api";
+import { toggleCompleteStatus } from "./utils/api";
+import { editNote } from "./utils/api";
 
-function Note({ notes, setNotes, category }) {
+function Note({ notes, category, loadNotes }) {
   const [editItem, setEditItem] = useState({});
 
   // delete a note
-  const handleDelete = (id) => {
-    const filtered = notes.filter((note) => note.id !== id);
-    setNotes(filtered);
+  const handleDelete = async (id) => {
+    await deleteNote(id);
+    loadNotes();
   };
 
   // allow the note input to be edited
@@ -24,24 +27,19 @@ function Note({ notes, setNotes, category }) {
   };
 
   // save the new edited note and replace the original
-  const handleSaveEdit = () => {
-    const newNotesList = notes.map((note) =>
-      note.id === editItem.id ? editItem : note
-    );
-    setNotes(newNotesList);
+  const handleSaveEdit = async () => {
+    const { id } = editItem;
+    await editNote(id, editItem);
+    loadNotes();
     setEditItem({});
   };
 
   // if the note is completed, change completed status and move it to the end of the array
-  const toggleComplete = (id) => {
+  const toggleComplete = async (id) => {
     const found = notes.find((note) => note.id === id);
     found.completed = !found.completed;
-    const i = notes.indexOf(found);
-    const newOrder = [...notes];
-    found.completed
-      ? newOrder.push(...newOrder.splice(i, 1))
-      : newOrder.unshift(...newOrder.splice(i, 1));
-    setNotes(newOrder);
+    await toggleCompleteStatus(id, found.completed);
+    loadNotes();
   };
 
   // *** RENDER DIFFERENT NOTE DEPENDING ON THE TYPE REQUIRED
@@ -51,9 +49,9 @@ function Note({ notes, setNotes, category }) {
       <div key={note.id} className={`note ${note.category}`}>
         <div className="item-content">
           <div className="date-time">
-            <div>{new Date(note.timestamp).toLocaleDateString()}</div>
-            <div>{`${new Date(note.timestamp).getHours()}:${new Date(
-              note.timestamp
+            <div>{new Date(note.createdAt).toLocaleDateString()}</div>
+            <div>{`${new Date(note.createdAt).getHours()}:${new Date(
+              note.createdAt
             )
               .getMinutes()
               .toString()
@@ -117,6 +115,7 @@ function Note({ notes, setNotes, category }) {
             value={editItem.text}
             onChange={handleEdit}
             rows={editItem.text.split("").length / 20}
+            onKeyDown={(e) => e.key === "Enter" && handleSaveEdit()}
           />
           <br />
           <button
@@ -133,7 +132,10 @@ function Note({ notes, setNotes, category }) {
 
   return (
     <>
-      {notes.map(
+      {[
+        ...notes.filter((note) => !note.completed),
+        ...notes.filter((note) => note.completed),
+      ].map(
         (note) =>
           (category === "all" || category === note.category) &&
           (editItem.id !== note.id ? renderNote(note) : renderEditNote(note))

@@ -36,7 +36,6 @@ async function hasValidProperties(req, res, next) {
 async function hasValidUpdateStatusProperties(req, res, next) {
   const { data = {} } = req.body;
   const { isEditing, completed } = data;
-  console.log("completed", completed, "isEditing", isEditing);
 
   // check if there was data in body
   if (!req.body.data) {
@@ -87,7 +86,6 @@ async function update(req, res, next) {
   const {id} = req.params;
   const editedNote = req.body.data;
   const updatedNote = await notesService.update(id, editedNote);
-  console.log(updatedNote);
   res.status(200).json({data: updatedNote})
 }
 
@@ -109,14 +107,10 @@ async function updateStatus(req, res, next) {
 async function destroy(req, res, next) {
   const { id } = req.params;
   await notesService.destroy(id);
-  res.status(204).json();
+  res.status(204).end();
 }
 
-// module.exports = {
-//   list: list,
-//   read: [noteExists, read],
-//   create: [hasValidProperties, create],
-// };
+
 export { list };
 export const readMiddleware = [noteExists, read];
 export const createMiddleware = [hasValidProperties, create];

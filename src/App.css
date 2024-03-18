@@ -29,11 +29,17 @@ body {
   width: clamp(400px, 80%, 1000px);
 }
 
+select {
+  border-radius: 5px;
+  background: whitesmoke;
+}
+
 .form-textarea {
   width: 100%;
   margin-block: 1rem;
   border: none;
   padding: 0.5rem;
+  border-radius: 5px;
 }
 
 .error {
@@ -52,7 +58,7 @@ body {
   background-color: white;
   color: black;
   border: 0;
-  border-radius: 3px;
+  border-radius: 5px;
   padding: 3px 15px;
   text-transform: uppercase;
   cursor: pointer;
@@ -85,6 +91,11 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.item-content p {
+  align-self: flex-start;
+}
+
 
 .date-time {
   color: white;
