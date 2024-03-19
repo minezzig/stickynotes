@@ -18,9 +18,9 @@ function App() {
     const signal = abortController.signal;
     console.log("loadNotes api call");
 
-    listNotes({signal}).then(({ data }) =>
-      setNotes(data.reverse())
-    ).catch(error => console.log(error));
+    listNotes({ signal })
+      .then(({ data }) => setNotes(data.reverse()))
+      .catch((error) => console.log(error));
 
     return () => abortController.abort();
   };
@@ -36,8 +36,10 @@ function App() {
         setTextInput={setTextInput}
         loadNotes={loadNotes}
       />
-      {notes && (
+      {notes ? (
         <Notes notes={notes} setNotes={setNotes} loadNotes={loadNotes} />
+      ) : (
+        <h1>Loading stickyNotes</h1>
       )}
     </div>
   );
