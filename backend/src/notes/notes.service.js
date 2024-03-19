@@ -1,6 +1,6 @@
 // const { db } = require("../server");
 // const { notes } = require("../db/schema");
-import  db  from "../server.js";
+import  {db}  from "../server.js";
 import { notes } from "../db/schema.js";
 import { eq } from "drizzle-orm";
 
