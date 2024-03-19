@@ -29,7 +29,9 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}. Yay it works!`);
 });
 
-export default db;
+export { db }; // Export db as a named export
+
+export default app; // Export app as the default export
 
 
 
