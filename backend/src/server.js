@@ -5,7 +5,7 @@ import "dotenv/config";
 
 // initialize Neon database connection and export for use in notes.service
 const sql = neon(process.env.DRIZZLE_DATABASE_URL);
-export const db = drizzle(sql);
+const db = drizzle(sql);
 
 // set up express zpp;
 const { PORT = 4000 } = process.env;
@@ -14,6 +14,7 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}. Yay it works!`);
 });
 
+export { db };
 
 //  import { neon } from "@neondatabase/serverless";
 // import { drizzle } from "drizzle-orm/neon-http";
@@ -29,4 +30,3 @@ app.listen(PORT, () => {
 // app.listen(PORT, () => {
 //   console.log(`Server listening on ${PORT}. Yay it works!`);
 // });
-
