@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { createNote } from "./utils/api";
 
-function Form({ textInput, setTextInput, loadNotes}) {
+function Form({ textInput, setTextInput, loadNotes }) {
   const [error, setError] = useState(false);
-  
+
   // allow for input data
   const handleChange = (e) => {
     setTextInput({
@@ -14,24 +14,40 @@ function Form({ textInput, setTextInput, loadNotes}) {
 
   // save note entry in state or set Error
   const handleSave = async () => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
     if (!textInput.category || !textInput.text) {
       setError(true);
       return;
     }
-    await createNote(textInput) // call API to set note
-    loadNotes();
-    setTextInput({ category: "", text: ""});
-    setError(false);
+    try {
+      await createNote(textInput, { signal }); // call API to set note
+      loadNotes();
+      setTextInput({ category: "", text: "" });
+      setError(false);
+    } catch (error) {
+      console.log(error);
+    }
+    return () => abortController.abort();
   };
 
   // clear form
   const handleReset = () => {
-    setTextInput({ category: "", text: "", completed: false, isEditing: false });
+    setTextInput({
+      category: "",
+      text: "",
+      completed: false,
+      isEditing: false,
+    });
   };
 
   return (
     <div>
-      <select name="category" value={textInput.category} onChange={handleChange}>
+      <select
+        name="category"
+        value={textInput.category}
+        onChange={handleChange}
+      >
         <option value="" disabled>
           Category
         </option>

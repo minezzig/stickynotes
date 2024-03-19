@@ -14,8 +14,16 @@ function Note({ notes, category, loadNotes }) {
 
   // delete a note
   const handleDelete = async (id) => {
-    await deleteNote(id);
-    loadNotes();
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    try {
+      await deleteNote(id, {signal});
+      loadNotes();
+    } catch (error) {
+      console.log(error);
+    }
+
+    return () => abortController.abort();
   };
 
   // allow the note input to be edited
@@ -28,18 +36,34 @@ function Note({ notes, category, loadNotes }) {
 
   // save the new edited note and replace the original
   const handleSaveEdit = async () => {
+    const abortController = new AbortController();
+    const signal= abortController.signal;
     const { id } = editItem;
-    await editNote(id, editItem);
-    loadNotes();
-    setEditItem({});
+
+    try {
+      await editNote(id, editItem, {signal});
+      loadNotes();
+      setEditItem({});
+    } catch (error) {
+      console.log(error);
+    }
+    return () => abortController.abort();
   };
 
   // if the note is completed, change completed status and move it to the end of the array
   const toggleComplete = async (id) => {
+    const abortController = new AbortController();
+    const signal = abortController.signal;
     const found = notes.find((note) => note.id === id);
     found.completed = !found.completed;
-    await toggleCompleteStatus(id, found.completed);
-    loadNotes();
+    try {
+      await toggleCompleteStatus(id, found.completed, {signal});
+      loadNotes();
+    } catch (error) {
+      console.log(error);
+    }
+
+    return () => abortController.abort();
   };
 
   // *** RENDER DIFFERENT NOTE DEPENDING ON THE TYPE REQUIRED

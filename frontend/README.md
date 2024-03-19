@@ -6,8 +6,8 @@ In addition, the notes can be filtered to only view those within a certain categ
 
 <center>
 <p float="left">
-<img src="./frontend/src/images/screenshot.jpg" height=400>
-<img src="./frontend/src/images/screenshot-edit.jpg" height=400 />
+<img src="./src/images/screenshot.jpg" height=400>
+<img src="./src/images/screenshot-edit.jpg" height=400 />
 </p>
 </center>
 

@@ -18,48 +18,46 @@ async function noteExists(req, res, next) {
 async function hasValidProperties(req, res, next) {
   // valid properties
   const validProperties = ["category", "text"];
+
+  const validCategories = ["work", "personal", "appointment"];
   // check if empty
   const { data = {} } = req.body;
   if (!req.body.data) {
     return next({ status: 400, message: `no data` });
   }
-
   // chcek if contains all required parts;
   validProperties.forEach((property) => {
-    if (!data[property]) next({ status: 400, message: `missing property: ${property}` });
+    if (!data[property])
+      next({ status: 400, message: `missing property: ${property}` });
   });
-
+  // check if category is one of the optional fields
+  if (!validCategories.includes(data.category)) {
+    next({ status: 400, message: "category no acceptable" });
+  }
   next();
 }
 
-
-async function hasValidUpdateStatusProperties(req, res, next) {
+async function hasValidCompletedProperties(req, res, next) {
   const { data = {} } = req.body;
-  const { isEditing, completed } = data;
+  const { completed } = data;
 
   // check if there was data in body
   if (!req.body.data) {
     return next({ status: 400, message: "no data" });
   }
-  // check to see if it is updating "complted" or "isEditing"
-  if (completed === undefined && isEditing === undefined) {
-    return next({ status: 400, message: "must tell us what you want to edit" });
+  // check to see if it has a "completed" field
+  if (completed === undefined) {
+    return next({ status: 400, message: "must include 'completed' field" });
   }
 
   // check to see if the input is a boolean
-  if (data.hasOwnProperty("completed") && typeof data.completed !== "boolean") {
+  if (typeof data.completed !== "boolean") {
     return next({
       status: 400,
       message: "completed value must be true or false",
     });
   }
 
-  if (data.hasOwnProperty("isEditing") && typeof data.isEditing !== "boolean") {
-    return next({
-      status: 400,
-      message: "isEditing value must be true or false",
-    });
-  }
   next();
 }
 // --------------------API requests --------------------------------
@@ -83,10 +81,10 @@ async function create(req, res, next) {
 
 // edit the contents of a note (either the note[body] or category)
 async function update(req, res, next) {
-  const {id} = req.params;
+  const { id } = req.params;
   const editedNote = req.body.data;
   const updatedNote = await notesService.update(id, editedNote);
-  res.status(200).json({data: updatedNote})
+  res.status(200).json({ data: updatedNote });
 }
 
 // update either the completed or isEditing field
@@ -95,11 +93,9 @@ async function updateStatus(req, res, next) {
   const { data } = req.body;
   let updatedStatus;
   if (data.hasOwnProperty("completed")) {
-    updatedStatus = await notesService.updateStatusCompleted(id, data.completed);
+    updatedStatus = await notesService.updateCompleted(id, data.completed);
   }
-  if (data.hasOwnProperty("isEditing")) {
-    updatedStatus = await notesService.updateStatusIsEditing(id, data.isEditing);
-  }
+
   res.status(200).json({ data: updatedStatus });
 }
 
@@ -110,14 +106,13 @@ async function destroy(req, res, next) {
   res.status(204).end();
 }
 
-
 export { list };
 export const readMiddleware = [noteExists, read];
 export const createMiddleware = [hasValidProperties, create];
-export const updateMiddleware = [noteExists, hasValidProperties, update]
+export const updateMiddleware = [noteExists, hasValidProperties, update];
 export const patchMiddleware = [
   noteExists,
-  hasValidUpdateStatusProperties,
+  hasValidCompletedProperties,
   updateStatus,
 ];
 export const deleteMiddleware = [noteExists, destroy];

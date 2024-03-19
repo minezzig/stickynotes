@@ -30,19 +30,10 @@ async function destroy(id) {
 }
 
 //update the completed status
-async function updateStatusCompleted(id, completed) {
+async function updateCompleted(id, completed) {
   return db
     .update(notes)
     .set({ completed: completed })
-    .where(eq(notes.id, id))
-    .returning();
-}
-
-// update the isEditing status
-async function updateStatusIsEditing(id, isEditing) {
-  return db
-    .update(notes)
-    .set({ isEditing: isEditing })
     .where(eq(notes.id, id))
     .returning();
 }
@@ -62,6 +53,5 @@ export {
   destroy,
   create,
   update,
-  updateStatusCompleted,
-  updateStatusIsEditing,
+  updateCompleted,
 };
