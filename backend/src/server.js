@@ -14,7 +14,7 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}. Yay it works!`);
 });
 
-export { db };
+export default db;
 
 //  import { neon } from "@neondatabase/serverless";
 // import { drizzle } from "drizzle-orm/neon-http";
