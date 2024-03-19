@@ -13,7 +13,8 @@ import errorHandler from "./errors/errorHandler.js";
 
 export const app = express();
 
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
+app.use(express.json());
 app.use(cors());
 
 // app.get('/', async (req, res) => {
