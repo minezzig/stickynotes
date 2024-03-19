@@ -1,8 +1,8 @@
 import express from "express";
-import cors from 'cors';
-import bodyParser from 'body-parser';
+import cors from "cors";
+import bodyParser from "body-parser";
 import { db } from "./server.js";
-import {notes} from "./db/schema.js"
+import { notes } from "./db/schema.js";
 
 import router from "./notes/notes.router.js";
 import notFound from "./errors/notFound.js";
@@ -13,8 +13,8 @@ import errorHandler from "./errors/errorHandler.js";
 
 export const app = express();
 
-//app.use(bodyParser.json());
-app.use(express.json());
+app.use(bodyParser.json());
+//app.use(express.json());
 app.use(cors());
 
 // app.get('/', async (req, res) => {

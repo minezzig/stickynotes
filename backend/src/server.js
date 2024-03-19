@@ -12,8 +12,8 @@ export const db = drizzle(sql);
 //   console.log(data)
 // }
   // result();
-//const {PORT = 4000} = process.env;
-const PORT = 4000;
+const {PORT = 4000} = process.env;
+//const PORT = 4000;
 
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}. Yay it works!`);
