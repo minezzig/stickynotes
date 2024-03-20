@@ -1,0 +1,38 @@
+[
+  {
+    "category": "appointment",
+    "text": "this IS a reminder"
+  },
+  {
+    "category": "work",
+    "text": "don't forget this"
+  },
+  {
+    "category": "work",
+    "text": "don't forget this"
+  },
+  {
+    "category": "appointment",
+    "text": "Doctor's appointment Friday, April 11th. Don't forget to bring blood results"
+  },
+  {
+    "category": "work",
+    "text": "Make sure to review notes for the big presentation at the end of the quarter.  Things to remember: be confident and smile!"
+  },
+  {
+    "category": "work",
+    "text": "Remember to bring in that book I recommended to Gary"
+  },
+  {
+    "category": "personal",
+    "text": "My bucketlist: scuba diving, go to Antarctica, go camping, go bungee jumping"
+  },
+  {
+    "category": "appointment",
+    "text": "Job interview coming up soon. Make sure to go over resume.  Contact Mariah and ask her if she could help you with some interview prep and possible questions.  Also revise resume."
+  },
+  {
+    "category": "work",
+    "text": "new note to test if it's up and running again"
+  }
+]
