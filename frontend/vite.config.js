@@ -6,5 +6,5 @@ export default defineConfig({
   plugins: [react()],
   define: {
     __APP_ENV__: process.env.VITE_API_BASE_URL,
-  },
+  }
 })
