@@ -43,6 +43,13 @@
       "when": 1710527488245,
       "tag": "0005_tan_mindworm",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1710935709295,
+      "tag": "0006_low_the_hand",
+      "breakpoints": true
     }
   ]
 }

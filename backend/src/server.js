@@ -26,14 +26,14 @@ app.use(errorHandler);
 const { PORT = 4000 } = process.env;
 
 app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}. Yay it works!`);
+  console.log(
+    `Server listening on ${PORT} => http://localhost:${PORT}/notes`
+  );
 });
 
 export { db }; // Export db as a named export
 
 export default app; // Export app as the default export
-
-
 
 //  import { neon } from "@neondatabase/serverless";
 // import { drizzle } from "drizzle-orm/neon-http";
