@@ -8,7 +8,9 @@ import errorHandler from "./errors/errorHandler.js";
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+    origin: 'https://stickynotes-fullstack.vercel.app'
+  }));
 
 app.use("/notes/", router);
 
