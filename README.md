@@ -33,7 +33,7 @@ The frontend and backend are in a monorepo and have been deployed separately usi
 ## Links
 
 Frontend:
-https://stickynotes-fullstack.vercel.app/
+https://stickynotes-gm.vercel.app/
 
 Backend:
 https://stickynotes-server.vercel.app/
