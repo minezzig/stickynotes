@@ -13,6 +13,7 @@ function App() {
   });
   const [notes, setNotes] = useState(null);
 
+  // function that requests notes from server.  this function is called to refresh component after api calls
   const loadNotes = () => {
     const abortController = new AbortController();
     const signal = abortController.signal;

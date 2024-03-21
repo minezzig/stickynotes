@@ -1,6 +1,6 @@
-//const notesService = require("./notes.service");
 import * as notesService from "./notes.service.js";
 
+// check to see if note id exists in database
 async function noteExists(req, res, next) {
   const { id } = req.params;
   const note = await notesService.read(id);
@@ -15,10 +15,10 @@ async function noteExists(req, res, next) {
   next();
 }
 
+// check to see if POST request contains only valid properties - and that hose properties are valid 
 async function hasValidProperties(req, res, next) {
   // valid properties
   const validProperties = ["category", "text"];
-
   const validCategories = ["work", "personal", "appointment"];
   // check if empty
   const { data = {} } = req.body;
@@ -30,13 +30,14 @@ async function hasValidProperties(req, res, next) {
     if (!data[property])
       next({ status: 400, message: `missing property: ${property}` });
   });
-  // check if category is one of the optional fields
+  // check if category field has valid category
   if (!validCategories.includes(data.category)) {
     next({ status: 400, message: "category no acceptable" });
   }
   next();
 }
 
+// check to see if PATCH request has valid data - "completed" field with a boolean
 async function hasValidCompletedProperties(req, res, next) {
   const { data = {} } = req.body;
   const { completed } = data;

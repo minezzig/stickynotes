@@ -17,7 +17,7 @@ function Note({ notes, category, loadNotes }) {
     const abortController = new AbortController();
     const signal = abortController.signal;
     try {
-      await deleteNote(id, {signal});
+      await deleteNote(id, { signal });
       loadNotes();
     } catch (error) {
       console.log(error);
@@ -37,11 +37,11 @@ function Note({ notes, category, loadNotes }) {
   // save the new edited note and replace the original
   const handleSaveEdit = async () => {
     const abortController = new AbortController();
-    const signal= abortController.signal;
+    const signal = abortController.signal;
     const { id } = editItem;
 
     try {
-      await editNote(id, editItem, {signal});
+      await editNote(id, editItem, { signal });
       loadNotes();
       setEditItem({});
     } catch (error) {
@@ -57,7 +57,7 @@ function Note({ notes, category, loadNotes }) {
     const found = notes.find((note) => note.id === id);
     found.completed = !found.completed;
     try {
-      await toggleCompleteStatus(id, found.completed, {signal});
+      await toggleCompleteStatus(id, found.completed, { signal });
       loadNotes();
     } catch (error) {
       console.log(error);
