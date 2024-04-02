@@ -24,6 +24,7 @@ function Form({ textInput, setTextInput, loadNotes }) {
       await createNote(textInput, { signal }); // call API to set note
       loadNotes();
       setTextInput({ category: "", text: "" });
+      dropDown() 
       setError(false);
     } catch (error) {
       console.log(error);
@@ -41,43 +42,48 @@ function Form({ textInput, setTextInput, loadNotes }) {
     });
   };
 
-  return (
-    <div>
-      <select
-        name="category"
-        value={textInput.category}
-        onChange={handleChange}
-      >
-        <option value="" disabled>
-          Category
-        </option>
-        <option value="personal">Personal</option>
-        <option value="work">Work</option>
-        <option value="appointment">Appointment</option>
-      </select>
-      {error && (
-        <span className="error">
-          ...we need all of the information to post!
-        </span>
-      )}
-      <textarea
-        className="form-textarea"
-        rows="5"
-        name="text"
-        value={textInput.text}
-        onChange={handleChange}
-        onKeyDown={(e) => e.key === "Enter" && handleSave()}
-        placeholder="write your sticky note..."
-      />
-      <div className="buttons-container">
-        <button type="button" className="form-button" onClick={handleSave}>
-          Save
-        </button>
-        <button type="button" className="form-button" onClick={handleReset}>
-          Reset
-        </button>
+  function dropDown() {
+    document.querySelector(".form-container").classList.toggle("dropdown")
+  }
+  return (<div>
+    
+      <p className="dropdown-click"onClick={dropDown} style={{cursor: "pointer"}}>⬇️ New stickyNote</p>
+      <div className="form-container">
+        <select
+          name="category"
+          value={textInput.category}
+          onChange={handleChange}
+        >
+          <option value="" disabled>
+            Category
+          </option>
+          <option value="personal">Personal</option>
+          <option value="work">Work</option>
+          <option value="appointment">Appointment</option>
+        </select>
+        {error && (
+          <span className="error">
+            ...we need all of the information to post!
+          </span>
+        )}
+        <textarea
+          className="form-textarea"
+          name="text"
+          value={textInput.text}
+          onChange={handleChange}
+          onKeyDown={(e) => e.key === "Enter" && handleSave()}
+          placeholder="write your sticky note..."
+        />
+        <div className="buttons-container">
+          <button type="button" className="form-button" onClick={handleSave}>
+            Save
+          </button>
+          <button type="button" className="form-button" onClick={handleReset}>
+            Reset
+          </button>
+        </div>
       </div>
-    </div>
+  </div>
   );
 }
 
